@@ -54,7 +54,7 @@ public class DiaryEntry
      * Constructs a Diary Entry object with date as null.
      *
      * @param content the diary entry's content
-     * @throws DiaryEntryException when date and content is invalid
+     * @throws DiaryEntryException when content is invalid
      */
     public DiaryEntry(final String content)
             throws DiaryEntryException
@@ -74,6 +74,11 @@ public class DiaryEntry
     public static void validateDate(final String date)
             throws DiaryEntryException
     {
+        if(date == null)
+        {
+            return;
+        }
+
         final String[] parts;
         parts = date.split("-");
 
@@ -145,17 +150,18 @@ public class DiaryEntry
     private static void validateContent(final String content)
             throws DiaryEntryException
     {
-        if (content == null || content.isEmpty())
+        if (content == null || content.isBlank())
         {
-            throw new DiaryEntryException("content cannot be null or empty");
+            throw new DiaryEntryException("Content cannot be null or blank");
         }
 
 
         if (content.toLowerCase()
                    .contains(PROHIBITED_STRING))
         {
-            throw new DiaryEntryException("name cannot contain " +
-                                          PROHIBITED_STRING);
+            throw new DiaryEntryException("Content cannot contain string: \"" +
+                                          PROHIBITED_STRING +
+                                          "\" (case-insensitive)");
         }
     }
 

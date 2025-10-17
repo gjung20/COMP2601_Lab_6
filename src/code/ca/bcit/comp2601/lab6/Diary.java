@@ -50,27 +50,29 @@ public class Diary
     public void addEntry()
             throws IOException
     {
+//        final DiaryEntry diaryEntry;
+
         final String dateString;
         final String  content;
         final Scanner scanner;
-
 
         scanner = new Scanner(System.in);
 
 
         System.out.print("Enter date (YYYY-MM-DD): ");
+
         dateString = scanner.next();
+        scanner.nextLine();
 
-        scanner.next();
 
-        content = scanner.next();
+        System.out.print("Enter content: ");
 
-        scanner.next();
+        content = scanner.nextLine();
 
 
         final String diaryEntry;
 
-        diaryEntry = String.format("%s|%s|%s", dateString, content, System.lineSeparator());
+        diaryEntry = String.format("%s|%s%s", dateString, content, System.lineSeparator());
 
 
         try
@@ -80,7 +82,6 @@ public class Diary
         catch (final DiaryEntryException e)
         {
             System.out.println(e);
-            scanner.close();
 
             return;
         }
@@ -88,7 +89,8 @@ public class Diary
 
         Files.write(path, diaryEntry.getBytes(), StandardOpenOption.APPEND);
 
-        scanner.close();
+        System.out.println("\nDiary entry added successfully.\n");
+
     }
 
 
@@ -118,8 +120,7 @@ public class Diary
             System.out.println("Enter date (YYYY-MM-DD): ");
 
             dateString = scanner.next();
-
-            scanner.next();
+            scanner.nextLine();
 
             try
             {
